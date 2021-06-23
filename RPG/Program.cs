@@ -31,9 +31,9 @@ namespace RPG
                 Console.WriteLine("Digite o nome do heroi!");
                 nomeBoneco = Console.ReadLine();
             }
-            Boneco hero = new Boneco(nomeBoneco, 100, 10, 10, 100, 10);
+            Boneco hero = new Boneco(nomeBoneco, 1000, 10, 100, 100, 10);
 
-            Boneco monster = new Boneco("LowLvl monster", 20, 2, 10, 100, 15);
+            Boneco monster = new Boneco("LowLvl monster", 500, 2, 50, 100, 15);
 
             Combat(hero, monster);
 
@@ -48,26 +48,45 @@ namespace RPG
             while (player.HP > 0 && oponent.HP > 0)
             {
                 round++;
-                Console.WriteLine($"\n============== Round {round} ==============");
+
+                System.Threading.Thread.Sleep(1000);
+
+                Console.WriteLine($"\n=============================== Round {round} ==============================\n");
                 Console.WriteLine(oponent.ShowStatus() + "\n\n" + player.ShowStatus());
+                Console.WriteLine("\n----------------------------------------------------------------------");
+
                 Console.ReadKey();
 
-                Console.WriteLine(player.Name + " Attacks! ");
-                oponent.HP--;
-                oponent.HP -= ((player.DamageAmount() - oponent.Armor) < 0) ? 0 : ((player.DamageAmount() - oponent.Armor) + 1);
+                Console.WriteLine("\n" + player.Name + " Attacks!\n");
+
+                System.Threading.Thread.Sleep(1000);
+
+                damage = player.DamageAmount() - oponent.Armor;
+                if (damage < 0)
+                    damage = 0;
+
+                oponent.HP -= damage + 1;
                 if (oponent.HP <= 0)
                 {
-                    Console.WriteLine(oponent.Name + " Is dead");
+                    Console.WriteLine(oponent.Name + " Is dead!!!\n");
                     player.LvlUp(1.1m);
                     break;
                 }
 
-                Console.WriteLine(oponent.Name + "Is stil alive! and it attacks!!!!");
-                player.HP--;
-                player.HP -= ((oponent.DamageAmount() - player.Armor) < 0) ? 0 : ((oponent.DamageAmount() - player.Armor) + 1);
+                System.Threading.Thread.Sleep(1000);
+
+                Console.WriteLine("\n" + oponent.Name + "Is stil alive! and it attacks!!!!\n");
+
+                System.Threading.Thread.Sleep(1000);
+
+                damage = (oponent.DamageAmount() - player.Armor);
+                if (damage < 0)
+                    damage = 0;
+
+                player.HP -= damage + 1;
                 if (player.HP <= 0)
                 {
-                    Console.WriteLine(player.Name + " Is dead");
+                    Console.WriteLine(player.Name + " Is dead!!!\n");
                     oponent.LvlUp(1.1m);
                     break;
                 }

@@ -41,13 +41,17 @@ namespace RPG.Entities
             Random random = new Random();
             if (random.Next(100) <= CritChance)
             {
-                return decimal.Round(
-                    (decimal)random.NextDouble() * maxValue - minValue + minValue * (CritAmmount / 100)
-                    , 1);
+                maxValue = (decimal)random.NextDouble() * (maxValue - minValue) + minValue;
+                maxValue = decimal.Round(maxValue + maxValue * (CritAmmount / 100), 1);
+                Console.WriteLine($"\n#CRIT!# {maxValue} DAMAGE#\n");
+
+                return maxValue;
             }
             else
             {
-                return decimal.Round((decimal)random.NextDouble() * (maxValue - minValue) + minValue, 1);
+                maxValue = decimal.Round((decimal)random.NextDouble() * (maxValue - minValue) + minValue, 1);
+                Console.WriteLine($"\n#{maxValue} Damage#");                
+                    return maxValue;
             }
         }
 
